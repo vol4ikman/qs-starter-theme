@@ -30,24 +30,11 @@ function qstheme_textdomain(){
 /*****************************************
 **  Includes
 ****************************************/
-    get_template_part("admin/options");
-	get_template_part("admin/types");
-
-	get_template_part("functions/hooks");
-    get_template_part("functions/core-functions");
-    get_template_part("functions/functions");    
-    get_template_part("functions/front-ajax");
-	get_template_part("functions/widgets");
-/*****************************************
-**  Plugin
-*****************************************/
-//Page children menu
-//get_template_part("functions/plugins/get_page_children");
-// Call to function with:  build_menu_list($post, 'page',true);
-
-//Get Image Plugin
-//get_template_part("functions/plugins/get_image");
-// Call to function with:  get_image( array() ) // for more info https://github.com/nivnoiman/get_image
+get_template_part("admin/options");
+get_template_part("admin/types");
+get_template_part("functions/hooks");
+get_template_part("functions/functions");    
+get_template_part("functions/front-ajax");
 
 /*****************************************
 **  Global
@@ -68,3 +55,15 @@ if (function_exists('add_theme_support')){
     // Enables post and comment RSS feed links to head
     add_theme_support('automatic-feed-links');
 }
+
+/**********************
+    ACF Google API
+**********************/
+function get_google_api_key(){
+    $google_api_key = get_field('google_api_key','option');
+    return $google_api_key;
+}
+function google_api_acf_init() {
+	acf_update_setting('google_api_key', get_google_api_key());
+}
+add_action('acf/init', 'google_api_acf_init');
